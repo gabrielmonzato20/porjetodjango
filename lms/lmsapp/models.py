@@ -52,7 +52,7 @@ class Aluno(models.Model):
      		raise Exception('')
      	if len(Aluno.objects.filter(login=self.login))>0:
      		raise Exception('')
-     	if Professor.objects.filter(login=self.login) == Aluno.objects.filter(login=self.login):
+     	if len(Professor.objects.filter(login=self.login)) == len(Aluno.objects.filter(login=self.login)) and len(Aluno.objects.filter(login=self.login)) > 1 or len(Professor.objects.filter(login=self.login)):
      		raise Exception("")
      	super(Aluno,self).save()
     nome = models.TextField(max_length=255)
