@@ -34,6 +34,9 @@ class DisciplinaOfertada(models.Model):
 			raise Exception('')
 		if len(DisciplinaOfertada.objects.filter(ano=self.ano ,semestre=self.semestre, turma=self.turma, curso=self.curso , disciplina=self.disciplina)) >=1:
 			raise Exception("")
+		if self.professor != self.disciplina:
+			raise Exception("")
+
 		super(DisciplinaOfertada,self).save()
 	curso = models.TextField(max_length=255)
 	turma = models.TextField(max_length=5)
@@ -41,5 +44,21 @@ class DisciplinaOfertada(models.Model):
 	semestre = models.IntegerField() 
 	professor = models.IntegerField() 
 	disciplina = models.IntegerField() 
+class Aluno(models.Model):
+    def save(self):
+     	if self.email == "":
+     		self.email =  'email nao fornecido'
+     	if self.login=='':
+     		raise Exception('')
+     	if len(Aluno.objects.filter(login=self.login))>0:
+     		raise Exception('')
+     	if Professor.objects.filter(login=self.login) == Aluno.objects.filter(login=self.login):
+     		raise Exception("")
+     	super(Aluno,self).save()
+    nome = models.TextField(max_length=255)
+    email =models.TextField(max_length=255)
+    celular = models.TextField(max_length=20)
+    login = models.TextField(max_length=20)
+    senha = models.TextField(max_length=20)
 
 
