@@ -1,3 +1,5 @@
+#Atividade de LP2
+
 from django.db import models
 
 class Professor(models.Model):
