@@ -1,8 +1,11 @@
 #Atividade de LP2
 
 from django.db import models
-
-class Professor(models.Model):
+from lmsapp.professor import *
+from lmsapp.disciplina import *
+from lmsapp.aluno import *
+from lmsapp.disciplinaofertada import *
+'''class Professor(models.Model):
     def __str__(self):
         return self.nome + self.email
     def save(self):
@@ -36,10 +39,14 @@ class DisciplinaOfertada(models.Model):
 			raise Exception('')
 		if len(DisciplinaOfertada.objects.filter(ano=self.ano ,semestre=self.semestre, turma=self.turma, curso=self.curso , disciplina=self.disciplina)) >=1:
 			raise Exception("")
-		if self.professor != self.disciplina:
+		if len(Professor.objects.filter(id=self.professor))<1:
 			raise Exception("")
-
+		if len(Disciplina.objects.filter(id=self.disciplina))<1:
+			raise Exception("")
 		super(DisciplinaOfertada,self).save()
+        
+
+
 	curso = models.TextField(max_length=255)
 	turma = models.TextField(max_length=5)
 	ano = models.IntegerField() 
@@ -61,6 +68,6 @@ class Aluno(models.Model):
     email =models.TextField(max_length=255)
     celular = models.TextField(max_length=20)
     login = models.TextField(max_length=20)
-    senha = models.TextField(max_length=20)
+    senha = models.TextField(max_length=20)'''
 
 

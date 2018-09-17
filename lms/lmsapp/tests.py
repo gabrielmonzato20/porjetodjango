@@ -10,6 +10,9 @@ class ProfessorTests(TestCase):
         professor = Professor()
         professor.login='astro'
         professor.save()
+        professor = Professor()
+        professor.login='segundo'
+        professor.save()
         try:
            disciplina = Disciplina()
         except:
@@ -19,7 +22,9 @@ class ProfessorTests(TestCase):
         disciplina.save()
         
     '''
-    Testa os campos que o professor tem que ter (veja o teste)
+    Testa os campos que o professor tem que ter.
+
+    O teste salva o professor e depois verifica se salvou mesmo
     '''    
     def test_01_criar_professor(self):
         professor = Professor()
@@ -40,7 +45,7 @@ class ProfessorTests(TestCase):
 
         
     '''
-    devemos ter um erro quando o professor vier sem login    
+    devemos ter uma exception quando o professor vier sem login    
     '''
     def test_02_sem_login(self):
         professor = Professor()
@@ -52,6 +57,9 @@ class ProfessorTests(TestCase):
     '''
     quando criamos um professor sem email, seu email deve ser 
     a string 'email nao fornecido'
+
+    O teste salva um professor sem email, carrega e verifica se ele vem
+    com essa string no campo email
     '''
     def test_03_sem_email(self):
         professor = Professor()
@@ -67,7 +75,7 @@ class ProfessorTests(TestCase):
 
 
     '''
-    Devemos ter um erro se o professor está vindo com um login que já existe
+    Devemos ter uma exception se o professor está vindo com um login que já existe
     '''
     def test_04_login_repetido(self):
         professor = Professor()
@@ -79,6 +87,8 @@ class ProfessorTests(TestCase):
 
     '''
     Os campos que deve ter uma disciplina
+
+    O teste salva e carrega pra ver se esta OK
     '''
     def test_05_disciplina_salvar(self):
         disciplina = Disciplina()
@@ -91,6 +101,7 @@ class ProfessorTests(TestCase):
 
     '''
     Nao pode haver duas disciplinas com o mesmo nome
+    Se tentarmos salvar a segunda com o nome, deve ocorrer uma exception
     ''' 
     def test_06_disciplina_dobrada(self):
         disciplina = Disciplina()
@@ -156,6 +167,8 @@ class ProfessorTests(TestCase):
 
     '''
     O campo curso pode ter 3 valores distintos: 'ADS', 'SI' e 'BD'
+
+    Se passarmos algum outro, o codigo deve dar uma exception
     '''
     def test_08_ofertada_salvar_curso_invalido(self):
         ofertada = DisciplinaOfertada()
@@ -170,6 +183,10 @@ class ProfessorTests(TestCase):
     '''
     Não podemos criar duas ofertadas com o mesmo ano. semestre, turma, curso e disciplina
     Alguma dessas coisas tem que variar
+
+    Se tentarmos salvar uma disciplina "repetida" com todos os dados
+    iguais, devemos ter uma exception
+
     '''
     def test_09_ofertada_repetida(self):
         ofertada = DisciplinaOfertada()
@@ -192,6 +209,13 @@ class ProfessorTests(TestCase):
     '''
     Temos que tomar cuidado para usarmos Ids válidas de professor e de disciplina, ao definir uma
     disciplinaOfertada
+
+    Se dermos uma id inválida de professor ou de disciplina, devemos dar uma exception
+    
+    O codigo salva uma disciplina ofertada invalida, com ids invalidas
+    para verificar a exception.
+
+    Depois salva uma valida, para verificar que isso nao da exception
     '''
     def test_10_ofertada_mal_definida_prof_ou_disciplina(self):
         ofertada = DisciplinaOfertada()
@@ -205,9 +229,12 @@ class ProfessorTests(TestCase):
         ofertada.professor=1
         ofertada.disciplina=100
         self.assertRaises(Exception,ofertada.save)
-        ofertada.professor=1
+        ofertada.professor=2
         ofertada.disciplina=1
-        ofertada.save()
+        try:
+           ofertada.save()
+        except Exception:
+            self.fail("fiz uma ofertada valida mas recebi exception")
     
     '''
     Aluno é um modelo igual ao professor
