@@ -387,13 +387,6 @@ class ProfessorTests(TestCase):
         matricula.disciplinaOfertada = 4
         self.assertRaises(Exception,matricula.save)
 
-    def test_19a_LÓLÓ(self):
-        altera = Professor()
-        altera.login ='joao'
-        altera.save()
-        altera.email = 'joao@exemplo.com'
-        altera.save()
-        self.assertEqual(altera.email,'joao@exemplo.com')
     '''
     Um aluno não pode fazer dois oferecimentos da mesma disciplina
     '''
@@ -418,4 +411,20 @@ class ProfessorTests(TestCase):
         matricula = Matricula()
         matricula.aluno = 1
         matricula.disciplinaOfertada = ids[1]
-        self.assertRaises(Exception,matricula.save)        
+        self.assertRaises(Exception,matricula.save)       
+
+    def test_21_LÓLÓ(self):
+        altera = Professor()
+        altera.login ='joao'
+        altera.save()
+        altera.email = 'joao@exemplo.com'
+        altera.save()
+        self.assertEqual(altera.email,'joao@exemplo.com') 
+
+    def test_22_monzatinho(self):
+        altera = Professor()
+        altera.login ='joao'
+        altera.save()
+        altera.email = 'joao@exemplo.com'
+        altera.login = 'astro'
+        self.assertRaises(Exception,altera.save)
